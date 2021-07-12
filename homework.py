@@ -39,9 +39,10 @@ class Calculator(Record):
             if record.date == today:
                 sum_today.append(record.amount)
         return sum(sum_today)
+
     def remained(self):
-         remain = self.limit - self.get_today_stats()
-         return remain
+        remain = self.limit - self.get_today_stats()
+        return remain
 
     def get_week_stats(self):
         week_stats = []
@@ -53,18 +54,16 @@ class Calculator(Record):
 
 
 class CashCalculator(Calculator):
-
-
     EURO_RATE = 70.0
     RUB_RATE = 1
     USD_RATE = 60.0
-    
+
     def get_today_cash_remained(self, currency):
 
         cur_dic = {
             'rub': [CashCalculator.RUB_RATE, 'руб'],
             'usd': [CashCalculator.USD_RATE, 'USD'],
-            'eur': [CashCalculator.EURO_RATE, 'Euro'],}
+            'eur': [CashCalculator.EURO_RATE, 'Euro'], }
         today_calc_list = []
         for record in self.records:
             if record.date == dt.date.today():
@@ -78,11 +77,11 @@ class CashCalculator(Calculator):
         else:
             today_calc = sum(today_calc_list) - self.limit
             today_calc = round((today_calc / cur_dic[currency][0]), 2)
-            return f'Денег нет, держись: твой долг - {today_calc} {cur_dic[currency][1]}'
+            return (f'Денег нет, держись: твой долг - '
+                    f'{today_calc} {cur_dic[currency][1]}')
 
 
 class CaloriesCalculator(Calculator):
-
 
     def __init__(self, limit: float):
         super().__init__(limit)
@@ -91,9 +90,9 @@ class CaloriesCalculator(Calculator):
         calories_remained = self.remained()
         if calories_remained > 0:
             return ('Сегодня можно съесть что-нибудь ещё, но с общей '
-            f'калорийностью не более {calories_remained} кКал')
+                    f'калорийностью не более {calories_remained} кКал')
         return 'Хватит есть!'
-            
+
 
 cash_calculator = CashCalculator(1000)
 
@@ -108,12 +107,7 @@ cash_calculator.add_record(Record(amount=3000,
                                   date='08.11.2019'))
 
 print(cash_calculator.get_today_cash_remained('rub'))
-
-caloriesCalculator = CaloriesCalculator(1000)
-caloriesCalculator.add_record(Record(amount=645, comment='cola'))
-caloriesCalculator.add_record(Record(amount=345, comment='кофе'))
-print(caloriesCalculator.get_calories_remained())
-# должно напечататься
-# На сегодня осталось 555 руб 
 print(cash_calculator.get_today_stats())
 print(cash_calculator.get_week_stats())
+# должно напечататься.
+# На сегодня осталось 555 руб.
