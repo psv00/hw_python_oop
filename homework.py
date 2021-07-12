@@ -20,7 +20,7 @@ class Calculator(Record):
 
     def __init__(self, limit) -> None:
         self.limit = limit
-        self.records = []  #type:List
+        self.records = [] #type:List
 
     def add_record(self, record):
         self.records.append(record)
