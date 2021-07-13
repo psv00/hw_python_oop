@@ -49,27 +49,27 @@ class CashCalculator(Calculator):
     RUB_RATE = 1
     USD_RATE = 60.0
     CUR_DIC = {
-            'rub': (RUB_RATE, 'руб'),
-            'usd': (USD_RATE, 'USD'),
-            'eur': (EURO_RATE, 'Euro'), }
+              'rub': (RUB_RATE, 'руб'),
+              'usd': (USD_RATE, 'USD'),
+              'eur': (EURO_RATE, 'Euro'), }
 
     def get_today_cash_remained(self, currency):
         rate, name = CashCalculator.CUR_DIC[currency]
         if self.get_today_stats() < self.limit:
             today_calc = self.limit - self.get_today_stats()
             today_calc = round(
-                        (today_calc / rate), 2)
+                              (today_calc / rate), 2)
             return (f'На сегодня осталось '
                     f'{today_calc} {name}')
         elif self.get_today_stats() == self.limit:
             return 'Денег нет, держись'
         today_calc = self.get_today_stats() - self.limit
         today_calc = round(
-            (today_calc / rate), 2)
+                          (today_calc / rate), 2)
         return (
                'Денег нет, держись: твой долг - '
                f'{today_calc} {name}'
-                )
+               )
 
 
 class CaloriesCalculator(Calculator):
