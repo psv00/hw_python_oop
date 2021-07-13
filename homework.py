@@ -39,9 +39,9 @@ class Calculator(Record):
         week_ago = dt.datetime.today().date() - dt.timedelta(days=7)
         today = dt.datetime.today().date()
         return sum(
-                  record.amount for record in self.records
-                  if week_ago <= record.date <= today
-                  )
+                   record.amount for record in self.records
+                   if week_ago <= record.date <= today
+                   )
 
 
 class CashCalculator(Calculator):
@@ -49,9 +49,9 @@ class CashCalculator(Calculator):
     RUB_RATE = 1
     USD_RATE = 60.0
     CUR_DIC = {
-              'rub': (RUB_RATE, 'руб'),
-              'usd': (USD_RATE, 'USD'),
-              'eur': (EURO_RATE, 'Euro'), }
+               'rub': (RUB_RATE, 'руб'),
+               'usd': (USD_RATE, 'USD'),
+               'eur': (EURO_RATE, 'Euro'), }
 
     def get_today_cash_remained(self, currency):
         rate, name = CashCalculator.CUR_DIC[currency]
@@ -67,8 +67,8 @@ class CashCalculator(Calculator):
         today_calc = round(
                           (today_calc / rate), 2)
         return (
-               'Денег нет, держись: твой долг - '
-               f'{today_calc} {name}'
+                'Денег нет, держись: твой долг - '
+                f'{today_calc} {name}'
                )
 
 
