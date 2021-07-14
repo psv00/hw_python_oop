@@ -27,9 +27,9 @@ class Calculator(Record):
 
     def get_today_stats(self):
         today = dt.datetime.today().date()
-        return sum(record.amount for record in self.records
-                   if record.date == today
-                   )
+        return sum(
+            record.amount for record in self.records if record.date == today
+        )
 
     def remained(self):
         remain = self.limit - self.get_today_stats()
@@ -38,9 +38,10 @@ class Calculator(Record):
     def get_week_stats(self):
         week_ago = dt.datetime.today().date() - dt.timedelta(days=7)
         today = dt.datetime.today().date()
-        return sum(record.amount for record in self.records
-                   if week_ago <= record.date <= today
-                   )
+        return sum(
+            record.amount for record in self.records
+            if week_ago <= record.date <= today
+        )
 
 
 class CashCalculator(Calculator):
@@ -55,15 +56,13 @@ class CashCalculator(Calculator):
         rate, name = CashCalculator.CUR_DIC[currency]
         if self.get_today_stats() < self.limit:
             today_calc = self.limit - self.get_today_stats()
-            today_calc = round(
-                              (today_calc / rate), 2)
-            return (f'На сегодня осталось '
+            today_calc = round((today_calc / rate), 2)
+            return ('На сегодня осталось '
                     f'{today_calc} {name}')
         elif self.get_today_stats() == self.limit:
             return 'Денег нет, держись'
         today_calc = self.get_today_stats() - self.limit
-        today_calc = round(
-                          (today_calc / rate), 2)
+        today_calc = round((today_calc / rate), 2)
         return ('Денег нет, держись: твой долг - '
                 f'{today_calc} {name}'
                 )
